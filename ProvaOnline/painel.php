@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-<title>Prova  Online</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<?php
+  include("head.php");
+  include("logado.php");
+?>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 </style>
@@ -17,13 +13,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <img src="/w3images/avatar_g2.jpg" style="width:45%;" class="w3-round"><br><br>
-    <h4><b>Nome Aluno/Professor</b></h4>
+    <h4><b><?php echo($email);?></b></h4>
   </div>
   <div class="w3-bar-block">
     <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>PROVAS</a> 
     <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PERFIL</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>RELATORIOS</a>
+    <a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="	fa fa-ban fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
 
@@ -46,47 +42,23 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   
   <!-- First  Grid-->
   <div class="w3-row-padding">
-    <div class="w3-third w3-container w3-margin-bottom">
+    <?php
+      include('conexao.php');
+              
+                  
+      $SQL = "SELECT prova.pro_id, prova.pro_data, materia.mat_nome FROM prova INNER JOIN materia ON prova.mat_id = materia.mat_id WHERE prova.mat_id IN (SELECT turma_has_materia.mat_id FROM turma_has_materia WHERE tur_id = (SELECT alunos.turma_tur_id FROM alunos INNER JOIN dadospes ON alunos.dadospes_id = dadospes.dadospes_id WHERE dadospes.usu_id = $usu_id))";
+      
+      $resultado = $conexao->query($SQL);
+          
+      if($resultado->num_rows>0)	
+      {							
+    ?>
+    <div class="w3-third w3-container prova-margin">
       <div class="w3-container w3-white">
         <p><b>Prova 1</b></p>
         <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
       </div>
     </div>
-    <div class="w3-third w3-container w3-margin-bottom">
-      <div class="w3-container w3-white">
-        <p><b>Prova 2</b></p>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      </div>
-    </div>
-    <div class="w3-third w3-container">
-      <div class="w3-container w3-white">
-        <p><b>Prova 3</b></p>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Second  Grid-->
-  <div class="w3-row-padding">
-    <div class="w3-third w3-container w3-margin-bottom">
-      <div class="w3-container w3-white">
-        <p><b>Prova 4</b></p>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      </div>
-    </div>
-    <div class="w3-third w3-container w3-margin-bottom">
-      <div class="w3-container w3-white">
-        <p><b>Prova 5</b></p>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      </div>
-    </div>
-    <div class="w3-third w3-container">
-      <div class="w3-container w3-white">
-        <p><b>Prova </b></p>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      </div>
-    </div>
-  </div>
 	
   <!-- perfil Section -->
 	<div class="w3-container w3-white" style="padding:50px 13px" id="perfil">
@@ -212,3 +184,6 @@ function w3_close() {
 
 </body>
 </html>
+<?php
+  include("logadof.php");
+?>

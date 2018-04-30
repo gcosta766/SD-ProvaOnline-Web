@@ -38,7 +38,7 @@ session_start();
 			if($senha == $usu_senha)
 			{
 				$_SESSION['Logado'] = 'S';
-				$_SESSION['email'] = $usu_senha;
+				$_SESSION['email'] = $usu_email;
 				$_SESSION['id'] = $usu_id;
 				$_SESSION['perfil'] = $usu_perfil;
 			
