@@ -49,17 +49,24 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
       $SQL = "SELECT prova.pro_id, prova.pro_data, materia.mat_nome FROM prova INNER JOIN materia ON prova.mat_id = materia.mat_id WHERE prova.mat_id IN (SELECT turma_has_materia.mat_id FROM turma_has_materia WHERE tur_id = (SELECT alunos.turma_tur_id FROM alunos INNER JOIN dadospes ON alunos.dadospes_id = dadospes.dadospes_id WHERE dadospes.usu_id = $usu_id))";
       
       $resultado = $conexao->query($SQL);
-          
-      if($resultado->num_rows>0)	
-      {							
+       
+      while($linha = $resultado->fetch_object())
+			{ 
+        $data = $linha->pro_data; 
+        $arr_data = explode("-", $data);
+       
+        echo"
+          <div class='w3-third w3-container prova-margin'>
+            <div class='w3-container w3-white'>
+              <p><b>$linha->mat_nome</b></p>
+              <p>Data: $arr_data[2]/$arr_data[1]/$arr_data[0]</p>
+            </div>
+          </div>
+        ";
+      }
     ?>
-    <div class="w3-third w3-container prova-margin">
-      <div class="w3-container w3-white">
-        <p><b>Prova 1</b></p>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-      </div>
-    </div>
-	
+
+	</div>
   <!-- perfil Section -->
 	<div class="w3-container w3-white" style="padding:50px 13px" id="perfil">
 		<div class="w3-container">
@@ -184,6 +191,7 @@ function w3_close() {
 
 </body>
 </html>
+
 <?php
   include("logadof.php");
 ?>
