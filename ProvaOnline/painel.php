@@ -56,12 +56,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         $arr_data = explode("-", $data);
        
         echo"
+        <a href='quiz.php?id=$linha->pro_id'>
           <div class='w3-third w3-container prova-margin'>
             <div class='w3-container w3-white'>
               <p><b>$linha->mat_nome</b></p>
               <p>Data: $arr_data[2]/$arr_data[1]/$arr_data[0]</p>
             </div>
           </div>
+        </a>
         ";
       }
     ?>

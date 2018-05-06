@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+ 	$pro_id = $_GET['id'];
+?>
 <html lang="pt">
 <head>
 <title>Prova online</title>
@@ -30,13 +33,13 @@
 		//Esconder div de botões ao carregar a página e esperar pelo começo do quiz
 		$("#botoes").hide();
 		
-		//Esconder botão Next
-		$("#btn_ok").hide();
+		//Esconder botão Sair
+		$("#btn_sair").hide();
 		
 		//Carregar primeira questão:
 		$("#startQuiz").click(function()
 		{
-			$.post("processa.php",
+			$.post("processa.php?id=0",
 			{
 				Start: 'ok'
 			},
@@ -53,11 +56,6 @@
 			//Pegar número da quetão do campo hidden
 			var questao = $("#resp").attr("name");
 
-			//Esconder botão Next
-			$("#btn_ok").hide();
-			//Mostrar botão Answer
-			$("#btn_resp").show();
-
 			//Enviar respostas e carregar a próxima questão
 			$.post("processa.php",
 				{
@@ -66,80 +64,41 @@
 				},
 				function(Resposta)
 				{
-	              	//Carregar próxima questão na div
+					//Carregar próxima questão na div
 					$("#questao").html(Resposta);
 
 					//Verificar questão:
 					if($("#last").val() == "last")
 					{
 						//Esconder botão Answer
-						$("#btn_resp").hide();
-						//Trocar nome para Play Again e recomeçar o quiz
-						$("#btn_ok").html("Play Again");
-						//Mostrar botão Play Again
-						$("#btn_ok").show();
-					}
-					else
-					{
-						//Mostrar botão Answer
-						$("#btn_resp").show();
-						//Trocar nome para Next
-						$("#btn_ok").html("Next");
-						//Esconder botão Next
 						$("#btn_ok").hide();
+						//Mostrar botão Play Again
+						$("#btn_sair").show();
 					}
 				 }); //Fecha $.post()-----------------
 		}); //Fecha btn_ok.click-----------------
 
-		//Mostrar resposta certa
-		$("#btn_resp").click(function(){
-			//Para cada input, faça:
-			$("input").each(function(){
-				//Se input atual não for o hidden que armazena a resposta
-				if(
-					$(this).attr('id') != "resp" && $(this).attr('id') != "last")
-				{
-					//Se input tiver o valor da resposta correta.
-					if($(this).val() == $("#resp").val())
-					{
-						$(this).parent().parent().addClass("alert alert-success");
-					}
-					//Se input não tiver o valor da resposta correta.
-					else
-					{
-					    $(this).parent().parent().addClass("alert alert-danger");
-					}
-				}
-			}); //Fecha $.each--------------
-			//Esconder botão Answer
-			$("#btn_resp").hide();
-			//Mostrar botão Next
-			$("#btn_ok").show();
-
-		}); //Fecha btn_resp.click----------
+		//BOTAO SAIR
+		$("#btn_sair").click(function(){
+				// Do something
+		}); //Fecha btn_sair.click-----------------
 	}); //Fecha document.ready--------------
 </script>
 
 </head>
-	<body>
-<?php
-
-include("menualuno.php")
-
-?>
-	
+	<body>	
 	
 	<div class="container">
 	<div class="jumbotron">
 		<!--QUIZ-->
 		<div class="container" id="questao">
-			<h1> Let's start! </h1><br>
-			<button type="button" class="btn btn-success btn-lg" id="startQuiz">Start Quiz</button>
+			<h1> Clique no botão para iniciar!</h1><br>
+			<button type="button" class="btn btn-success btn-lg" id="startQuiz">Iniciar Prova</button>
 			<!--Form Questão-->
 		</div>
 		<div id="botoes">
-			<button type="button" class="btn btn-success" id="btn_resp">Answer</button>
-			<button type="button" class="btn btn-success" id="btn_ok">Next</button>
+			<button type="button" class="btn btn-success" id="btn_sair">Sair</button>
+			<button type="button" class="btn btn-success" id="btn_ok">Responder</button>
 		</div>
 	</div>
 	</div>

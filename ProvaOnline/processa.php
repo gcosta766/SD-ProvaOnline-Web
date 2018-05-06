@@ -1,6 +1,10 @@
 <?php	
 session_start();
 include("conexao.php");
+if(isset($_GET['id'])){
+	$pro_id = $_GET['id'];
+}
+
 	try
 	{
 		//Contador das questões
@@ -22,11 +26,12 @@ include("conexao.php");
 			$_SESSION['Questoes'] = array(); //Códigos das questões 
 			
 			//Pegar todas as questões cadastradas no banco de dados			
-			$SQL = "SELECT questao_idprova  FROM prova_has_questao";
+			$SQL = "SELECT questao.ques_id FROM questao INNER JOIN prova_has_questao ON questao.ques_id = prova_has_questao.ques_id WHERE prova_has_questao.pro_id = $pro_id ";
 			$resultado = $conexao->query($SQL);
+			$_SESSION['QtdQuestoes'] = $resultado->num_rows;
 			while($linha = $resultado->fetch_object())
 			{
-				array_push($_SESSION['Questoes'], $linha->questao_idprova );
+				array_push($_SESSION['Questoes'], $linha->ques_id);
 			}
 			
 			//Embaralhar questões
@@ -40,11 +45,11 @@ include("conexao.php");
 			//echo "Alternativa Resposta: ".$AlternResp;
 			//Verificando se a resposta está correta
 			//echo"<script>alert('$AlternResp')</script>";
-			$SQL = "SELECT respostaprova FROM questao WHERE idprova = ".$_POST['NumQ'];
+			$SQL = "SELECT ques_res FROM questao WHERE ques_id = ".$_POST['NumQ'];
 			$resultado = $conexao->query($SQL);
 			$linha = $resultado->fetch_object();
 			//echo "Respota certa: $linha->Resposta";
-			if($linha->Resposta == $AlternResp)
+			if($linha->ques_res == $AlternResp)
 			{
 				$_SESSION['Corretas'] += 1;
 			}
@@ -55,12 +60,12 @@ include("conexao.php");
 		}	
 
 		//Número de questões, fim do quiz
-		if($_SESSION['NumQuestao'] >= 5)
+		if($_SESSION['NumQuestao'] >= $_SESSION['QtdQuestoes'])
 		{
 			echo"
 			<h1> End of the quiz </h1>
-			<p><strong>Number of hits :</strong> ".$_SESSION['Corretas']."</p>
-			<p><strong>Number of errors :</strong> ".$_SESSION['Erradas']."</p>
+			<p><strong>Respostas certas:</strong> ".$_SESSION['Corretas']."</p>
+			<p><strong>Respostas erradas :</strong> ".$_SESSION['Erradas']."</p>
 			<input type=\"hidden\" value=\"last\" id=\"last\">
 			";
 			//session_destroy();
@@ -74,14 +79,14 @@ include("conexao.php");
 		{
 			$_SESSION['Status'] = 'online';
 			//Montar próxima questão:
-			$SQL = "SELECT * FROM questao WHERE idprova = '".$_SESSION['Questoes'][($_SESSION['NumQuestao'])]."'";
+			$SQL = "SELECT * FROM questao WHERE ques_id = '".$_SESSION['Questoes'][($_SESSION['NumQuestao'])]."'";
 			
 			$resultado = $conexao->query($SQL);
 			$linha = $resultado->fetch_object();
 			$QuestaoAtual = $_SESSION['NumQuestao'];
-			echo "
+			echo utf8_encode("
 			<form role=\"form\">
-				<h4><strong>".($QuestaoAtual + 1)." - </strong>".$linha->Questao."</h4>
+				<h4><strong>".($QuestaoAtual + 1)." - </strong>".$linha->ques_enun."</h4>
 				<span>
 					<div class=\"radio\">
 						<label><input type=\"radio\" name=\"alternativa\" value=\"A\" checked><strong>A- </strong>".$linha->A."</label>
@@ -107,9 +112,9 @@ include("conexao.php");
 						<label><input type=\"radio\" name=\"alternativa\" value=\"E\"><strong>E- </strong>".$linha->E."</label>
 					</div>
 				</span>
-				<input type=\"hidden\" id=\"resp\" value=\"$linha->respostaprova\" name=\"$linha->idprova\">
+				<input type=\"hidden\" id=\"resp\" value=\"$linha->ques_res\" name=\"$linha->ques_id\">
 			</form>
-			";
+			");
 
 			$_SESSION['NumQuestao'] += 1;
 		}
