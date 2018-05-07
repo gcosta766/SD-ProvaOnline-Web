@@ -62,10 +62,19 @@ if(isset($_GET['id'])){
 		//Número de questões, fim do quiz
 		if($_SESSION['NumQuestao'] >= $_SESSION['QtdQuestoes'])
 		{
+			date_default_timezone_set('America/Sao_Paulo');
+			$date = date('Y-m-d H:i');
+
+			$SQL = "SELECT ques_res FROM questao WHERE ques_id = ".$_POST['NumQ'];
+			$resultado = $conexao->query($SQL);
+			$linha = $resultado->fetch_object();
+			
 			echo"
-			<h1> End of the quiz </h1>
-			<p><strong>Respostas certas:</strong> ".$_SESSION['Corretas']."</p>
-			<p><strong>Respostas erradas :</strong> ".$_SESSION['Erradas']."</p>
+			<h1> Fim da prova </h1>
+			<p><strong>Data e Hora :</strong> ".$date."</p>
+			<p><strong>ID do aluno:</strong> ".$_SESSION['Erradas']."</p>
+			<p><strong>Nome do aluno:</strong> ".$_SESSION['Erradas']."</p>
+			<p><strong>Nota:</strong> ".$_SESSION['Corretas']."</p>
 			<input type=\"hidden\" value=\"last\" id=\"last\">
 			";
 			//session_destroy();

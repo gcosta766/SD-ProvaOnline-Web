@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
- 	$pro_id = $_GET['id'];
+	 $pro_id = $_GET['id'];
+
 ?>
 <html lang="pt">
 <head>
