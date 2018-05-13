@@ -96,7 +96,7 @@ session_start();
 					$_SESSION['end_id'] = $linha->end_id;
 					$_SESSION['esc_id'] = $linha->esc_id;
 					//redirecionar o usuario para a pagina restrita 
-					header("Location:painel.php");
+					header("Location:painelprof.php");
 				}	
 				elseif($usu_ativo == 'S' && $usu_perfil == 'adm'){
 					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
