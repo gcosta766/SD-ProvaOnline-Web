@@ -41,11 +41,70 @@ session_start();
 				$_SESSION['email'] = $usu_email;
 				$_SESSION['id'] = $usu_id;
 				$_SESSION['perfil'] = $usu_perfil;
-			
-				if($usu_ativo == 'S')
-				{
-					//redirecionar o usuario para a pagina restrita 
 
+				
+
+
+				if($usu_ativo == 'S' && $usu_perfil == 'alu')
+				{
+					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
+					//infomaçoes de dados pessoais 
+					$usu_id = $_SESSION['id'];
+					$SQL = "select * from dadospes WHERE usu_id ='$usu_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['dadospes_id'] = $linha->dadospes_id;
+					$_SESSION['dadospes_nome'] = $linha->dadospes_nome;
+					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
+					$_SESSION['end_id'] = $linha->end_id;
+					$_SESSION['esc_id'] = $linha->esc_id;
+					//infomaçoes do aluno
+					$dadospes_id =	$_SESSION['dadospes_id'];
+					$SQL = "select * from alunos WHERE dadospes_id='$dadospes_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['alu_id'] = $linha->alu_id;
+					$_SESSION['alu_num_mat'] = $linha->alu_num_mat;
+					$_SESSION['turma_tur_id'] = $linha->turma_tur_id;
+					//infomaçoes da escola 
+					$esc_id =	$_SESSION['esc_id'];
+					$SQL = "select * from escola WHERE 	esc_id='$esc_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['esc_nome'] = $linha->esc_nome;
+					$_SESSION['esc_status'] = $linha->esc_status;
+					$_SESSION['end_id'] = $linha->end_id;
+					//redirecionar o usuario para a pagina restrita 
+					header("Location:painel.php");
+				}
+				elseif($usu_ativo == 'S' && $usu_perfil == 'pro'){
+					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
+					//infomaçoes de dados pessoais 
+					$usu_id = $_SESSION['id'];
+					$SQL = "select * from dadospes WHERE usu_id ='$usu_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['dadospes_id'] = $linha->dadospes_id;
+					$_SESSION['dadospes_nome'] = $linha->dadospes_nome;
+					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
+					$_SESSION['end_id'] = $linha->end_id;
+					$_SESSION['esc_id'] = $linha->esc_id;
+					//redirecionar o usuario para a pagina restrita 
+					header("Location:painel.php");
+				}	
+				elseif($usu_ativo == 'S' && $usu_perfil == 'adm'){
+					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
+					//infomaçoes de dados pessoais 
+					$usu_id = $_SESSION['id'];
+					$SQL = "select * from dadospes WHERE usu_id ='$usu_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['dadospes_id'] = $linha->dadospes_id;
+					$_SESSION['dadospes_nome'] = $linha->dadospes_nome;
+					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
+					$_SESSION['end_id'] = $linha->end_id;
+					$_SESSION['esc_id'] = $linha->esc_id;
+					//redirecionar o usuario para a pagina restrita 
 					header("Location:painel.php");
 				}
 				else

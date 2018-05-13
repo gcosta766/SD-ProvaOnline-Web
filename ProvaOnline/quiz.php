@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	 $pro_id = $_GET['id'];
-
+	
 ?>
 <html lang="pt">
 <head>
@@ -36,6 +36,8 @@
 		
 		//Esconder botão Sair
 		$("#btn_sair").hide();
+
+		$("#Fim").hide();
 		
 		//Carregar primeira questão:
 		$("#startQuiz").click(function()
@@ -81,27 +83,26 @@
 
 		//BOTAO SAIR
 		$("#btn_sair").click(function(){
-				// Do something
+			window.location.replace("painel.php");
 		}); //Fecha btn_sair.click-----------------
 	}); //Fecha document.ready--------------
 </script>
 
 </head>
 	<body>	
-	
-	<div class="container">
-	<div class="jumbotron">
-		<!--QUIZ-->
-		<div class="container" id="questao">
-			<h1> Clique no botão para iniciar!</h1><br>
-			<button type="button" class="btn btn-success btn-lg" id="startQuiz">Iniciar Prova</button>
-			<!--Form Questão-->
+		<div class="container">
+			<div class="jumbotron">
+				<!--QUIZ-->
+				<div class="container" id="questao">
+					<h1> Clique no botão para iniciar!</h1><br>
+					<button type="button" class="btn btn-success btn-lg" id="startQuiz">Iniciar Prova</button>
+					<!--Form Questão-->
+				</div>
+				<div id="botoes">
+					<button type="button" class="btn btn-success" id="btn_sair">Sair</button>
+					<button type="button" class="btn btn-success" id="btn_ok">Responder</button>
+				</div>
+			</div>
 		</div>
-		<div id="botoes">
-			<button type="button" class="btn btn-success" id="btn_sair">Sair</button>
-			<button type="button" class="btn btn-success" id="btn_ok">Responder</button>
-		</div>
-	</div>
-	</div>
 </body>
 </html>  

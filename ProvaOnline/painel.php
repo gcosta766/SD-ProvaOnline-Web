@@ -13,7 +13,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <h4><b><?php echo($email);?></b></h4>
+    <h4><b><?php echo($dadospes_nome);?></b></h4>
+    <h6><b><?php echo($email);?></b></ho>
   </div>
   <div class="w3-bar-block">
     <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>PROVAS</a> 
@@ -76,18 +77,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			<div class="w3-section w3-bottombar w3-padding-16">
 			</div>
 		</div>
-		<form class="w3-container  w3-padding-16">
-			<p>
-			<label>First Name</label>
-			<input class="w3-input" type="text"></p>
-			<p>
-			<label>Last Name</label>
-			<input class="w3-input" type="text"></p>
-			<p>
-			<label>Email</label>
-			<input class="w3-input" type="text"></p>
-			<button class="w3-btn w3-block w3-teal">Salvar alteração</button>
-		</form>
+
 	</div>
   
   <!-- relatorios Section -->
@@ -97,40 +87,30 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			<div class="w3-section w3-bottombar w3-padding-16">
 			</div>
 		</div>
-		<table class="w3-table w3-bordered  w3-border w3-white test w3-hoverable">
-			<tr class="w3-teal">
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Points</th>
-			</tr>
-			<tbody>
-			<tr>
-				<td>Jill</td>
-				<td>Smith</td>
-				<td>50</td>
-			</tr>
-			<tr>
-				<td>Eve</td>
-				<td>Jackson</td>
-				<td>94</td>
-			</tr>
-			<tr>
-				<td>Adam</td>
-				<td>Johnson</td>
-				<td>67</td>
-			</tr>
-			<tr>
-				<td>Bo</td>
-				<td>Nilsson</td>
-				<td>50</td>
-			</tr>
-			<tr>
-				<td>Mike</td>
-				<td>Ross</td>
-				<td>35</td>
-			</tr>
-			</tbody>
-		</table>
+    <table class="w3-table w3-white w3-bordered w3-hoverable">
+      <thead>
+        <tr class="w3-teal">
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Jill</td>
+        <td>Smith</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>Eve</td>
+        <td>Jackson</td>
+        <td>94</td>
+      </tr>
+      <tr>
+        <td>Adam</td>
+        <td>Johnson</td>
+        <td>67</td>
+      </tr>
+    </table>
 		<hr>
   </div>
 
