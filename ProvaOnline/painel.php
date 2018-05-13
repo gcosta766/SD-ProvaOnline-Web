@@ -73,43 +73,44 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   <!-- perfil Section -->
 	<div class="w3-container w3-white" style="padding:50px 13px" id="perfil">
 		<div class="w3-container">
-			<h1><b>Perfil</b></h1>
+			<h1><b>Dados Pessoais</b></h1>
 			<div class="w3-section w3-bottombar w3-padding-16">
 			</div>
 		</div>
-
+    <div class=" center" style="width:95%">
+      <header class="w3-container w3-light-grey">
+        <h3>Nome: <?php echo($dadospes_nome);?></h3>
+      </header>
+      <div class="w3-container">
+        <p><b>CPF:</b> <?php echo($_SESSION['dadospes_cpf']);?></p>
+        <hr>
+        <p><b>RM:</b> <?php echo($_SESSION['alu_num_mat']);?></p>
+        <hr>
+        <p><b>Escola:</b> <?php echo($_SESSION['esc_nome']);?></p>
+        <hr>
+        <p><b>Turma:</b> <?php echo($_SESSION['tur_nom']);?></p>
+        <hr>
+      </div>
+    </div>
 	</div>
   
   <!-- relatorios Section -->
   <div class="w3-container w3-padding-large">
 		<div class="w3-container">
-			<h1><b>Relatorio</b></h1>
+			<h1><b>Notas</b></h1>
 			<div class="w3-section w3-bottombar w3-padding-16">
 			</div>
 		</div>
     <table class="w3-table w3-white w3-bordered w3-hoverable">
       <thead>
         <tr class="w3-teal">
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Points</th>
+          <th>Materia</th>
+          <th>Nota</th>
         </tr>
       </thead>
       <tr>
         <td>Jill</td>
         <td>Smith</td>
-        <td>50</td>
-      </tr>
-      <tr>
-        <td>Eve</td>
-        <td>Jackson</td>
-        <td>94</td>
-      </tr>
-      <tr>
-        <td>Adam</td>
-        <td>Johnson</td>
-        <td>67</td>
-      </tr>
     </table>
 		<hr>
   </div>

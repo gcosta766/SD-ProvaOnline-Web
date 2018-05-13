@@ -66,6 +66,12 @@ session_start();
 					$_SESSION['alu_id'] = $linha->alu_id;
 					$_SESSION['alu_num_mat'] = $linha->alu_num_mat;
 					$_SESSION['turma_tur_id'] = $linha->turma_tur_id;
+					//infomação da turma 
+					$tur_id =	$_SESSION['turma_tur_id'];
+					$SQL = "select * from turma WHERE tur_id='$tur_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['tur_nom'] = $linha->tur_nom;
 					//infomaçoes da escola 
 					$esc_id =	$_SESSION['esc_id'];
 					$SQL = "select * from escola WHERE 	esc_id='$esc_id'";
