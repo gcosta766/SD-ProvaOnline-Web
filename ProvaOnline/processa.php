@@ -67,36 +67,40 @@ if(isset($_GET['id'])){
 			date_default_timezone_set('America/Sao_Paulo');
 			$date = date('Y-m-d H:i');
 
-			$SQL = "SELECT ques_res FROM questao WHERE ques_id = ".$_POST['NumQ'];
-			$resultado = $conexao->query($SQL);
-			$linha = $resultado->fetch_object();
 			//informaçoes pegas no login
 			$dadospes_nome = $_SESSION['dadospes_nome']; 
 			$alu_num_mat =	$_SESSION['alu_num_mat']; 
-		
-			echo"
-			<h1> Fim da prova </h1>
-			<p><strong>Data e Hora :</strong> ".$date."</p>
-			<p><strong>RM do aluno:</strong> ".$alu_num_mat."</p>
-			<p><strong>Nome do aluno:</strong> ".$dadospes_nome."</p>
-			<p><strong>Quantidade de perguntas:</strong> ".$_SESSION['QtdQuestoes']."</p>
-			<p><strong>Nota:</strong> ".$_SESSION['Corretas']."</p>
-			<input type=\"hidden\" value=\"last\" id=\"last\">
-			";
-		
+			
 			$alu_id =	$_SESSION['alu_id'];
 			$nota = $_SESSION['Corretas'];
 			$pro_id =$_SESSION['pro_id'];
+			
+			$SQL = "INSERT INTO prova_realizada (`alunos_alu_id`, `prova_pro_id`, `prea_dat_hor`, `prea_nota`) VALUES ($alu_id, $pro_id, '$date', $nota)";
+			$resultado = $conexao->query($SQL);
+			
+			if($resultado){
+				
+				echo"
+				<h1> Fim da prova </h1>
+				<p><strong>Data e Hora :</strong> ".$date."</p>
+				<p><strong>RM do aluno:</strong> ".$alu_num_mat."</p>
+				<p><strong>Nome do aluno:</strong> ".$dadospes_nome."</p>
+				<p><strong>Quantidade de perguntas:</strong> ".$_SESSION['QtdQuestoes']."</p>
+				<p><strong>Nota:</strong> ".$_SESSION['Corretas']."</p>
+				<input type=\"hidden\" value=\"last\" id=\"last\">
+				";
+				//session_destroy();
+				unset($_SESSION['Corretas']);
+				unset($_SESSION['pro_id']);
+				unset($_SESSION['Erradas']);
+				unset($_SESSION['Questoes']);
+				unset($_SESSION['Status']);
+				unset($_SESSION['NumQuestao']);	
 
-			$SQL = "INSERT INTO prova_realizada (`alunos_alu_id`, `prova_pro_id`, `prea_dat_hor`, `prea_nota`) VALUES ($alu_id, $pro_id, `$date`, $nota)";
-	
-			//session_destroy();
-			unset($_SESSION['Corretas']);
-			unset($_SESSION['pro_id']);
-			unset($_SESSION['Erradas']);
-			unset($_SESSION['Questoes']);
-			unset($_SESSION['Status']);
-			unset($_SESSION['NumQuestao']);	
+			}
+			else{
+				echo $resultado->error;
+			}
 		}
 		else
 		{
