@@ -55,17 +55,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 			{ 
         $data = $linha->pro_data; 
         $arr_data = explode("-", $data);
-       
+        $_SESSION['pro_id'] = $linha->pro_id;
         echo"
-        <a href='quiz.php?id=$linha->pro_id'>
-          <div class='w3-third w3-container prova-margin'>
-            <div class='w3-container w3-white'>
-              <p><b>$linha->mat_nome</b></p>
-              <p>Data: $arr_data[2]/$arr_data[1]/$arr_data[0]</p>
-            </div>
-          </div>
-        </a>
-        ";
+            <a href='provaRealizada.php?id=$linha->pro_id'>
+              <div class='w3-third w3-container prova-margin'>
+                <div class='w3-container w3-white'>
+                  <p><b>$linha->mat_nome</b></p>
+                  <p>Data: $arr_data[2]/$arr_data[1]/$arr_data[0]</p>
+                </div>
+              </div>
+            </a>
+           ";
       }
     ?>
 
@@ -93,27 +93,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
       </div>
     </div>
 	</div>
-  
-  <!-- relatorios Section -->
-  <div class="w3-container w3-padding-large">
-		<div class="w3-container">
-			<h1><b>Notas</b></h1>
-			<div class="w3-section w3-bottombar w3-padding-16">
-			</div>
-		</div>
-    <table class="w3-table w3-white w3-bordered w3-hoverable">
-      <thead>
-        <tr class="w3-teal">
-          <th>Materia</th>
-          <th>Nota</th>
-        </tr>
-      </thead>
-      <tr>
-        <td>Jill</td>
-        <td>Smith</td>
-    </table>
-		<hr>
-  </div>
 
   <!-- Footer -->
   <footer class="w3-container w3-padding-32 w3-dark-grey">
