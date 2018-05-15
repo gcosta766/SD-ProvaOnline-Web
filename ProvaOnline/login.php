@@ -95,6 +95,23 @@ session_start();
 					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
 					$_SESSION['end_id'] = $linha->end_id;
 					$_SESSION['esc_id'] = $linha->esc_id;
+					//infomaçoes do professor
+					$dadospes_id =	$_SESSION['dadospes_id'];
+					$SQL = "select * from professor WHERE dadospes_id='$dadospes_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['prof_id'] = $linha->prof_id;
+					$_SESSION['prof_re'] = $linha->prof_re;
+					$_SESSION['turma_tur_id'] = $linha->turma_tur_id;
+					//infomaçoes da escola 
+					$esc_id =	$_SESSION['esc_id'];
+					$SQL = "select * from escola WHERE 	esc_id='$esc_id'";
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['esc_nome'] = $linha->esc_nome;
+					$_SESSION['esc_status'] = $linha->esc_status;
+					$_SESSION['end_id'] = $linha->end_id;
+
 					//redirecionar o usuario para a pagina restrita 
 					header("Location:painelprof.php");
 				}	
