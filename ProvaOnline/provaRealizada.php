@@ -1,21 +1,28 @@
 <?php
+	session_start();
   include('conexao.php');
-  $pro_id = $_SESSION['pro_id'];
+  if(isset($_GET['id'])){
+		$pro_id = $_GET['id'];
+		$_SESSION['pro_id'] = $pro_id;
+	}
   $alu_id = $_SESSION['alu_id'];    
-  $SQL = "SELECT * FROM `prova_realizada` WHERE `alunos_alu_id` = $alu_id  and `prova_pro_id`= $por_id";
+	$SQL = "SELECT * FROM `prova_realizada` WHERE `alunos_alu_id` = $alu_id  and `prova_pro_id`= $pro_id";
+	// echo $SQL;
   $resultado = $conexao->query($SQL);
-  if ($resultado !=""){
-    echo"
-    <div class='w3-third w3-container prova-margin'>
-      <div class='w3-container w3-white'>
-        <p><b>Realizada</b></p>
-        <p><b>Nota:$linha->prea_nota</b></p>
-        <p>Realizda dia: $linha->prea_dat_hor </p>
-      </div>
-    </div>
-  ";
+  if ($resultado->num_rows > 0){
+		$linha = $resultado->fetch_object();
+  //   echo"
+  //   <div class='w3-third w3-container prova-margin'>
+  //     <div class='w3-container w3-white'>
+  //       <p><b>Realizada</b></p>
+  //       <p><b>Nota:$linha->prea_nota</b></p>
+  //       <p>Realizda dia: $linha->prea_dat_hor </p>
+  //     </div>
+  //   </div>
+  // ";
   }else{
-    header("quiz.php?id=$linha->pro_id");
+		header("Location: quiz.php?id=$pro_id");
+		// die();
   }
 ?>
 <html lang="pt">
@@ -57,8 +64,8 @@
 				<!--QUIZ-->
 				<div class="container" id="questao">
 					<h1>Realizada</h1><br>
-          <p><b>Nota:$linha->prea_nota</b></p>
-          <p>Realizda dia: $linha->prea_dat_hor </p>
+          <p><b>Nota: <?php echo $linha->prea_nota ?></b></p>
+          <p>Realizda dia: <?php echo$linha->prea_dat_hor ?></p>
 					<!--Form Questão-->
 				</div>
 				<div id="botoes">
