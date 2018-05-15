@@ -33,7 +33,7 @@
 	$(document).ready(function(){
 		//BOTAO SAIR
 		$("#btn_sair").click(function(){
-			window.location.replace("painel.php");
+			window.location.replace("painelprof.php");
 		}); //Fecha btn_sair.click-----------------
     $("#btn_prova").click(function(){
 			window.location.replace("viquiz.php");
