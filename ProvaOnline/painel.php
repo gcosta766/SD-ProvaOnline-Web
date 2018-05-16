@@ -1,30 +1,8 @@
 <?php
   include("head.php");
   include("logado.php");
+  include("menualu.php")
 ?>
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-</style>
-<body class="w3-light-grey w3-content" style="max-width:1600px">
-
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="w3-container">
-    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
-      <i class="fa fa-remove"></i>
-    </a>
-    <h4><b><?php echo($dadospes_nome);?></b></h4>
-    <h6><b><?php echo($email);?></b></ho>
-  </div>
-  <div class="w3-bar-block">
-    <a href="#prova" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>PROVAS</a> 
-    <a href="#perfil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>Dados Pessoais</a> 
-    <a href="logout.php" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="	fa fa-ban fa-fw w3-margin-right"></i>LOGOUT</a>
-  </div>
-</nav>
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
@@ -34,7 +12,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>PROVAS</b></h1>
+    <h1 class=" w3-text-teal"><b>PROVAS</b></h1>
     <div class="w3-section w3-bottombar w3-padding-16">
     </div>
     </div>
@@ -72,7 +50,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   <!-- perfil Section -->
 	<div class="w3-container w3-white" style="padding:50px 13px" id="perfil">
 		<div class="w3-container">
-			<h1><b>Dados Pessoais</b></h1>
+			<h1 class=" w3-text-teal"><b>Dados Pessoais</b></h1>
 			<div class="w3-section w3-bottombar w3-padding-16">
 			</div>
 		</div>

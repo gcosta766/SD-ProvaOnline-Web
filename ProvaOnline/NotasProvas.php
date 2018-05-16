@@ -39,7 +39,7 @@
 			window.location.replace("viquiz.php");
 		});
     $("#btn_nota").click(function(){
-			window.location.replace("painel.php");
+			window.location.replace("notas.php");
 		});
 	}); //Fecha document.ready--------------
 </script>
