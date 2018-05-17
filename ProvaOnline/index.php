@@ -1,199 +1,281 @@
-<?php
-//head
+<!DOCTYPE html>
+<html lang="en">
 
-include("head.php");
+<head>
 
-session_start();
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-  
-  if(isset($_POST['Login']))
-  {
-    $login = $_POST['Login'];
-		$senha = $_POST['Senha'];
-	
-    include("conexao.php");
-	
-		$SQL = "select usu_id, usu_email, usu_senha, usu_perfil, usu_ativo  from  usuario
-				where usu_email='$login'";
-		
-		$resultado = mysqli_query($conexao, $SQL);
-		
-		if(mysqli_num_rows($resultado) == 0)
-		{
-			echo"<script>alert ('Login ou senha incorreto(a)!');
-					window.location.href='login.php';</script>";
-		} 
-		else
-		{
-			/*Se chegou nesse ponto do codigo ,indica q o login esta correto, devemos verificar se a senha esta correta
-			*/
-			
-			$linha=mysqli_fetch_object($resultado);
-			$usu_id = $linha->usu_id;
-			$usu_email = $linha->usu_email;
-			$usu_senha = $linha->usu_senha;
-			$usu_perfil = $linha->usu_perfil;
-			$usu_ativo = $linha->usu_ativo;
-			
-			if($senha == $usu_senha)
-			{
-				$_SESSION['Logado'] = 'S';
-				$_SESSION['email'] = $usu_email;
-				$_SESSION['id'] = $usu_id;
-				$_SESSION['perfil'] = $usu_perfil;
+	<title>Prova Online</title>
 
-				
-				if($usu_ativo == 'S' && $usu_perfil == 'alu')
-				{
-					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
-					//infomaçoes de dados pessoais 
-					$usu_id = $_SESSION['id'];
-					$SQL = "select * from dadospes WHERE usu_id ='$usu_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['dadospes_id'] = $linha->dadospes_id;
-					$_SESSION['dadospes_nome'] = $linha->dadospes_nome;
-					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
-					$_SESSION['end_id'] = $linha->end_id;
-					$_SESSION['esc_id'] = $linha->esc_id;
-					
-					//Endereço do Aluno
-					$SQL = "SELECT endereco.end_comp, endereco.end_num, logradouro.log_nome, bairros.bairro_nome, cidades.cid_nome FROM endereco LEFT JOIN logradouro ON endereco.log_id = logradouro.log_id LEFT JOIN bairros ON bairros.bairro_id = logradouro.bairros_bairro_id LEFT JOIN cidades ON cidades.cid_id = bairros.cidades_cid_id WHERE endereco.end_id = $linha->end_id";
-					
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['alu_end_log'] = $linha->log_nome;
-					$_SESSION['alu_end_num'] = $linha->end_num;
-					$_SESSION['alu_end_comp'] = $linha->end_comp;
-					$_SESSION['alu_end_bairro'] = $linha->bairro_nome;
-					$_SESSION['alu_end_cid'] = $linha->cid_nome;
+	<!-- Bootstrap core CSS -->
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-					//infomaçoes do aluno
-					$dadospes_id =	$_SESSION['dadospes_id'];
-					$SQL = "select * from alunos WHERE dadospes_id='$dadospes_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['alu_id'] = $linha->alu_id;
-					$_SESSION['alu_num_mat'] = $linha->alu_num_mat;
-					$_SESSION['turma_tur_id'] = $linha->turma_tur_id;
-					//infomação da turma 
-					$tur_id =	$_SESSION['turma_tur_id'];
-					$SQL = "select * from turma WHERE tur_id='$tur_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['tur_nom'] = $linha->tur_nom;
-					//infomaçoes da escola 
-					$esc_id =	$_SESSION['esc_id'];
-					$SQL = "select * from escola WHERE 	esc_id='$esc_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['esc_nome'] = $linha->esc_nome;
-					$_SESSION['esc_status'] = $linha->esc_status;
-					$_SESSION['end_id'] = $linha->end_id;
-					//redirecionar o usuario para a pagina restrita 
-					header("Location:painel.php");
-				}
-				elseif($usu_ativo == 'S' && $usu_perfil == 'pro'){
-					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
-					//infomaçoes de dados pessoais 
-					$usu_id = $_SESSION['id'];
-					$SQL = "select * from dadospes WHERE usu_id ='$usu_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['dadospes_id'] = $linha->dadospes_id;
-					$_SESSION['dadospes_nome'] = $linha->dadospes_nome;
-					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
-					$_SESSION['end_id'] = $linha->end_id;
-					$_SESSION['esc_id'] = $linha->esc_id;
+	<!-- Custom fonts for this template -->
+	<link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 
-					//Endereço do Aluno
-					$SQL = "SELECT endereco.end_comp, endereco.end_num, logradouro.log_nome, bairros.bairro_nome, cidades.cid_nome FROM endereco LEFT JOIN logradouro ON endereco.log_id = logradouro.log_id LEFT JOIN bairros ON bairros.bairro_id = logradouro.bairros_bairro_id LEFT JOIN cidades ON cidades.cid_id = bairros.cidades_cid_id WHERE endereco.end_id = $linha->end_id";
-					
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['pro_end_log'] = $linha->log_nome;
-					$_SESSION['pro_end_num'] = $linha->end_num;
-					$_SESSION['pro_end_comp'] = $linha->end_comp;
-					$_SESSION['pro_end_bairro'] = $linha->bairro_nome;
-					$_SESSION['pro_end_cid'] = $linha->cid_nome;
+	<!-- Plugin CSS -->
+	<link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
-					//infomaçoes do professor
-					$dadospes_id =	$_SESSION['dadospes_id'];
-					$SQL = "select * from professor WHERE dadospes_id='$dadospes_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['prof_id'] = $linha->prof_id;
-					$_SESSION['prof_re'] = $linha->prof_re;
-					$_SESSION['turma_tur_id'] = $linha->turma_tur_id;
-					//infomaçoes da escola 
-					$esc_id =	$_SESSION['esc_id'];
-					$SQL = "select * from escola WHERE 	esc_id='$esc_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['esc_nome'] = $linha->esc_nome;
-					$_SESSION['esc_status'] = $linha->esc_status;
-					$_SESSION['end_id'] = $linha->end_id;
+	<!-- Custom styles for this template -->
+	<link href="css/creative.min.css" rel="stylesheet">
+	  <style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
 
-					//redirecionar o usuario para a pagina restrita 
-					header("Location:painelprof.php");
-				}	
-				elseif($usu_ativo == 'S' && $usu_perfil == 'adm'){
-					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
-					//infomaçoes de dados pessoais 
-					$usu_id = $_SESSION['id'];
-					$SQL = "select * from dadospes WHERE usu_id ='$usu_id'";
-					$resultado = mysqli_query($conexao, $SQL);
-					$linha=mysqli_fetch_object($resultado);
-					$_SESSION['dadospes_id'] = $linha->dadospes_id;
-					$_SESSION['dadospes_nome'] = $linha->dadospes_nome;
-					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
-					$_SESSION['end_id'] = $linha->end_id;
-					$_SESSION['esc_id'] = $linha->esc_id;
-					//redirecionar o usuario para a pagina restrita 
-					header("Location:painel.php");
-				}
-				else
-				{	
-					echo"<script  charset='utf-8'>alert ('ATENÇÃO: Você ainda não tem permissão para acessar esta página.');
-					window.location.href='login.php';</script>";
-				}
-				}
-			else
-			{
-				
-				echo"<script>alert('Login ou senha incorreto(a)!');
-					window.location.href='login.php';</script>";
-			}	  
-		}
-	}	
-	else
-	{
+</head>
 
-	?>
+<body id="page-top">
 
-	
-	</head>
-	
-	<body class="login-fundo">
-		<div class="w3-container w3-margin-top">		
-			<div class="w3-card-4 login-center login-card w3-white">
-				<div class="w3-container w3-teal">
-					<h2>Login</h2>
-				</div>
-
-				<form class="w3-container" method="POST" action="index.php"  >
-					<p>
-					<label>E-mail</label></p>
-					<input class="w3-input" type="text" name="Login" id="email">
-					<p>    
-					<label>Senha</label></p> 
-					<input class="w3-input" type="password" name="Senha" id="pwd">
-					<p><button type="submit" class="w3-btn w3-block w3-teal">Enviar</button></p>
-				</form>
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+		<div class="container">
+			<a class="navbar-brand js-scroll-trigger" href="#page-top">Prova Online</a>
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#about">Informações</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#contact">Contato</a>
+					</li>
+				</ul>
 			</div>
 		</div>
-	</body>
+	</nav>
+
+	<header class="masthead text-center text-white d-flex">
+		<div class="container my-auto">
+			<div class="row">
+				<div class="col-lg-10 mx-auto">
+					<h1 class="text-uppercase">
+						<strong>Sistemas Distribuidos - Prova Online</strong>
+					</h1>
+					<hr>
+				</div>
+				<div class="col-lg-8 mx-auto">
+					<p class="text-faded mb-5">Essa pagina é dedicada a explicar melhor para nossos parceiros sobre nosso serviço</p>
+					<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Informações</a>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section class="bg-primary" id="about">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 mx-auto text-center">
+					<h2 class="section-heading text-white">O que voce precisa.</h2>
+					<hr class="light my-4">
+					<p class="text-faded mb-4">Esse sistema fornece aos seus clientes um serviço de qualidade no mercado pois vemos grandes dificuldades no sistema academico.</p>
+					<a class="btn btn-light btn-xl js-scroll-trigger" href="#services">Vamos Começar</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="services">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2 class="section-heading">No Seu Estudo!</h2>
+					<hr class="my-4">
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 text-center">
+					<div class="service-box mt-5 mx-auto">
+						<i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
+						<h3 class="mb-3">Sistema Diamante</h3>
+						<p class="text-muted mb-0">Sistema Com indicação e certificação do MEC.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 text-center">
+					<div class="service-box mt-5 mx-auto">
+						<i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
+						<h3 class="mb-3">Pronto Para Estudo</h3>
+						<p class="text-muted mb-0">Sistema de ponta a ponta,aonde todos conseguem ver suas notas de forma fácil.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 text-center">
+					<div class="service-box mt-5 mx-auto">
+						<i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
+						<h3 class="mb-3">Atualizações Em Dia</h3>
+						<p class="text-muted mb-0">Mantemos contato diário com os alunos para melhoras do sistema.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 text-center">
+					<div class="service-box mt-5 mx-auto">
+						<i class="fa fa-4x fa-heart text-primary mb-3 sr-icons"></i>
+						<h3 class="mb-3">Feito por alunos para alunos.</h3>
+						<p class="text-muted mb-0">Feito com respeito e dedicação ao maximo.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="p-0" id="portfolio">
+		<div class="container-fluid p-0">
+			<div class="row no-gutters popup-gallery">
+				<div class="col-lg-4 col-sm-6">
+					<img class="img-fluid" src="https://tse4.mm.bing.net/th?id=OIP.jTQy1Xp8dkJbcvFN52rcUgHaEK&pid=15.1" alt="">
+					<div class="portfolio-box-caption">
+						<div class="portfolio-box-caption-content">
+							<div class="project-category text-faded">
+								Category
+							</div>
+							<div class="estudoo">
+
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-4 col-sm-6">
+				<img class="img-fluid" src="https://tse1.mm.bing.net/th?id=OIP.YantC1WWbXcub3C4mwdXUQHaD0&pid=15.1" alt="">
+				<div class="portfolio-box-caption">
+					<div class="portfolio-box-caption-content">
+						<div class="project-category text-faded">
+							Category
+						</div>
+						<div class="estudoo">
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-4 col-sm-6">
+			<img class="img-fluid" src="http://geniodoenem.com.br/wp-content/uploads/2016/05/provas-do-enem-de-anos-anteriores.jpg" alt="">
+			<div class="portfolio-box-caption">
+				<div class="portfolio-box-caption-content">
+					<div class="project-category text-faded">
+						Category
+					</div>
+					<div class="estudoo">
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-lg-4 col-sm-6">
+		<img class="img-fluid" src="https://df8aa6jbtsnmo.cloudfront.net/news/prova-oab-domingo.jpg" alt="">
+		<div class="portfolio-box-caption">
+			<div class="portfolio-box-caption-content">
+				<div class="project-category text-faded">
+					Category
+				</div>
+				<div class="estudoo">
+				</div>
+			</div>
+		</div>
+	</a>
+</div>
+<div class="col-lg-4 col-sm-6">
+	<img class="img-fluid" src="http://3.bp.blogspot.com/-lipoVwryY-o/TxnYDxugDMI/AAAAAAAABJk/Nr-gfgAP5FA/s1600/Prova-Brasil-IDEB-2012.jpg" alt="">
+	<div class="portfolio-box-caption">
+		<div class="portfolio-box-caption-content">
+			<div class="project-category text-faded">
+				Category
+			</div>
+			<div class="estudoo">
+			</div>
+		</div>
+	</div>
+</a>
+</div>
+<div class="col-lg-4 col-sm-6">
+	<img class="img-fluid" src="http://www.novaconcursos.com.br/portal/wp-content/uploads/2016/11/o-que-cai-na-prova.jpg" alt="">
+	<div class="portfolio-box-caption">
+		<div class="portfolio-box-caption-content">
+			<div class="project-category text-faded">
+				Category
+			</div>
+			<div class="estudoo">
+			</div>
+		</div>
+	</div>
+</a>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bg-dark text-white">
+	<div class="container text-center">
+		<h2 class="mb-4"><img class="img-fluid" src="http://lh3.ggpht.com/JMapoHCdQd1U1j9xVrzHp_IeaD8VGkRArcTTE-1nSdsolwFHjZPbbJ3T4NtHEt2k39o=w300" alt=""></h2>
+
+		<a class="btn btn-light btn-xl sr-button" href="Login.php">Area De Login</a>
+	</div>
+
+</section>
+
+<section id="contact">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 mx-auto text-center">
+				<h2 class="section-heading">Contato</h2>
+				<hr class="my-4">
+				<p class="mb-5">Quer se tornar nosso Parceiro? Isso é otimo,Nos Ligue ou mande um e-mail assim que possivel e retornaremos contato!</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-4 ml-auto text-center">
+				<i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+				<p>123-456-6789</p>
+			</div>
+			<h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+			<script>
+				function initMap() {
+					var uluru = {lat: -25.363, lng: 131.044};
+					var map = new google.maps.Map(document.getElementById('map'), {
+						zoom: 4,
+						center: uluru
+					});
+					var marker = new google.maps.Marker({
+						position: uluru,
+						map: map
+					});
+				}
+			</script>
+			<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaTjkfmv94p19KgyQ-OGPhn7haPetMmcc&callback=initMap">
+		</script>
+		<div class="col-lg-4 mr-auto text-center">
+			<i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+			<p>
+				<a href="mailto:your-email@your-domain.com">Provaonline@gmail.com</a>
+			</p>
+		</div>
+	</div>
+</div>
+</section>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+<script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="js/creative.min.js"></script>
+
+</body>
+
 </html>
-<?php
-}
-?>

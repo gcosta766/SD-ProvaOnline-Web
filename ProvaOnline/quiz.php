@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	 $pro_id = $_GET['id'];
-	
+
 ?>
 <html lang="pt">
 <head>
@@ -94,7 +94,7 @@
 			<div class="jumbotron">
 				<!--QUIZ-->
 				<div class="container" id="questao">
-					<h1> Clique no botão para iniciar!</h1><br>
+					<h1> Clique no botão para iniciar! </h1><br>
 					<button type="button" class="btn btn-success btn-lg" id="startQuiz">Iniciar Prova</button>
 					<!--Form Questão-->
 				</div>

@@ -4,7 +4,6 @@ include("conexao.php");
 include("logado.php");
 if(isset($_GET['id'])){
 	$pro_id = $_GET['id'];
-	$_SESSION['pro_id'] = $pro_id;
 }
 
 	try
