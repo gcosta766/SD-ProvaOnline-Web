@@ -43,8 +43,6 @@ session_start();
 				$_SESSION['perfil'] = $usu_perfil;
 
 				
-
-
 				if($usu_ativo == 'S' && $usu_perfil == 'alu')
 				{
 					// pegar dados de infetificação relevantes para outras paginas (Quiz, painel)
@@ -58,6 +56,18 @@ session_start();
 					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
 					$_SESSION['end_id'] = $linha->end_id;
 					$_SESSION['esc_id'] = $linha->esc_id;
+					
+					//Endereço do Aluno
+					$SQL = "SELECT endereco.end_comp, endereco.end_num, logradouro.log_nome, bairros.bairro_nome, cidades.cid_nome FROM endereco LEFT JOIN logradouro ON endereco.log_id = logradouro.log_id LEFT JOIN bairros ON bairros.bairro_id = logradouro.bairros_bairro_id LEFT JOIN cidades ON cidades.cid_id = bairros.cidades_cid_id WHERE endereco.end_id = $linha->end_id";
+					
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['alu_end_log'] = $linha->log_nome;
+					$_SESSION['alu_end_num'] = $linha->end_num;
+					$_SESSION['alu_end_comp'] = $linha->end_comp;
+					$_SESSION['alu_end_bairro'] = $linha->bairro_nome;
+					$_SESSION['alu_end_cid'] = $linha->cid_nome;
+
 					//infomaçoes do aluno
 					$dadospes_id =	$_SESSION['dadospes_id'];
 					$SQL = "select * from alunos WHERE dadospes_id='$dadospes_id'";
@@ -95,6 +105,18 @@ session_start();
 					$_SESSION['dadospes_cpf'] = $linha->dadospes_cpf;
 					$_SESSION['end_id'] = $linha->end_id;
 					$_SESSION['esc_id'] = $linha->esc_id;
+
+					//Endereço do Aluno
+					$SQL = "SELECT endereco.end_comp, endereco.end_num, logradouro.log_nome, bairros.bairro_nome, cidades.cid_nome FROM endereco LEFT JOIN logradouro ON endereco.log_id = logradouro.log_id LEFT JOIN bairros ON bairros.bairro_id = logradouro.bairros_bairro_id LEFT JOIN cidades ON cidades.cid_id = bairros.cidades_cid_id WHERE endereco.end_id = $linha->end_id";
+					
+					$resultado = mysqli_query($conexao, $SQL);
+					$linha=mysqli_fetch_object($resultado);
+					$_SESSION['pro_end_log'] = $linha->log_nome;
+					$_SESSION['pro_end_num'] = $linha->end_num;
+					$_SESSION['pro_end_comp'] = $linha->end_comp;
+					$_SESSION['pro_end_bairro'] = $linha->bairro_nome;
+					$_SESSION['pro_end_cid'] = $linha->cid_nome;
+
 					//infomaçoes do professor
 					$dadospes_id =	$_SESSION['dadospes_id'];
 					$SQL = "select * from professor WHERE dadospes_id='$dadospes_id'";

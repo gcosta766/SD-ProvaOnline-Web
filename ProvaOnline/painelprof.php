@@ -67,6 +67,19 @@
         <hr>
         <p><b>Escola:</b> <?php echo($_SESSION['esc_nome']);?></p>
         <hr>
+        <header class="w3-container w3-light-grey">
+          <h3>Endereço:</h3>
+        </header>
+        <p><b>Logradouro:</b> <?php echo($_SESSION['pro_end_log']);?></p>
+        <hr>
+        <p><b>Bairro:</b> <?php echo($_SESSION['pro_end_bairro']);?></p>
+        <hr>
+        <p><b>Número:</b> <?php echo($_SESSION['pro_end_num']);?></p>
+        <hr>
+        <p><b>Complemento:</b> <?php echo($_SESSION['pro_end_comp']);?></p>
+        <hr>
+        <p><b>Cidade:</b> <?php echo($_SESSION['pro_end_cid']);?></p>
+        <hr>
       </div>
     </div>
 	</div>
