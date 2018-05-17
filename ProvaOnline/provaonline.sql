@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Maio-2018 às 19:13
+-- Generation Time: 17-Maio-2018 às 04:17
 -- Versão do servidor: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -39955,6 +39955,13 @@ CREATE TABLE `prova_realizada` (
   `prea_dat_hor` datetime NOT NULL,
   `prea_nota` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `prova_realizada`
+--
+
+INSERT INTO `prova_realizada` (`alunos_alu_id`, `prova_pro_id`, `prea_dat_hor`, `prea_nota`) VALUES
+(1, 0, '2018-05-13 11:54:00', 2);
 
 -- --------------------------------------------------------
 

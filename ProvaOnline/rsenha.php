@@ -16,12 +16,13 @@
 		$sql = "select usu_senha from usuario where usu_email='$login1'";
 		$resultado = mysqli_query($conexao, $sql);
 		$linha = mysqli_fetch_object($resultado);
-		@$senha_ant = $linha->Senha;
+		@$senha_ant = $linha->usu_senha;
 
 		if($senha1 == $senha_ant)
 		{
-			// if($senha2 == $senha3)
-			// {
+			 if($senha2 == $senha3)
+			 {
+			
 				$sql = "update usuario set usu_senha='$senha2' where usu_email= '$login1'";
 				
 				
@@ -34,15 +35,18 @@
 				{
 					echo"<script>alert('Erro: Senha não foi redefinida. Tente novamente.');</script>";
 				}
-			// }
-			// else
-			// 	{
-			// 		echo"<script>alert('Erro: Senhas não coincidem.');</script>";
-			// 	}
+			 }
+			else
+				{
+			 		echo"<script>alert('Erro: Senhas não coincidem.');</script>";
+			 	}
 		}
 		else
 		{
-			echo"<script>alert('Senhas não coincidem.');</script>";
+			echo($senha1);
+			echo($senha2);
+			echo($senha3);
+			echo"<script>alert('Senhas não coincidem. ');</script>";
 		}
 	}
 		else	
@@ -60,7 +64,12 @@
 
 <?php
 	include("head.php");
-  include("menualu.php");
+	if ($_SESSION['perfil'] == 'alu'){
+		include("menualu.php");
+	}
+  else{
+		include("menuprof.php");
+	}
 
 	
 ?>

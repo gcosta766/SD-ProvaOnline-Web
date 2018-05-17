@@ -181,7 +181,7 @@ session_start();
 					<h2>Login</h2>
 				</div>
 
-				<form class="w3-container" method="POST" action="login.php"  >
+				<form class="w3-container" method="POST" action="index.php"  >
 					<p>
 					<label>E-mail</label></p>
 					<input class="w3-input" type="text" name="Login" id="email">
