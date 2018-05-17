@@ -16,7 +16,7 @@
 		$sql = "select usu_senha from usuario where usu_email='$login1'";
 		$resultado = mysqli_query($conexao, $sql);
 		$linha = mysqli_fetch_object($resultado);
-		@$senha_ant = $linha->Senha;
+		@$senha_ant = $linha->usu_senha;
 
 		if($senha1 == $senha_ant)
 		{
@@ -64,7 +64,12 @@
 
 <?php
 	include("head.php");
-  include("menualu.php");
+	if ($_SESSION['perfil'] == 'alu'){
+		include("menualu.php");
+	}
+  else{
+		include("menuprof.php");
+	}
 
 	
 ?>
