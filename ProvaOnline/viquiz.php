@@ -43,7 +43,7 @@
 		//Carregar primeira questão:
 		$("#startQuiz").click(function()
 		{
-			$.post("processa.php?id=0",
+			$.post("viprocessa.php?id=0",
 			{
 				Start: 'ok'
 			},
